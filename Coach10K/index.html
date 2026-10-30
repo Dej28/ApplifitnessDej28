@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Coach 10K</title>
+
+    <link rel="manifest" href="manifest.json">
+
+    <meta
+       name="theme-color"
+       content="#1976d2">
+
+    <link
+        rel="stylesheet"
+        href="css/style.css">
+
+    <script src="https://unpkg.com/fit-file-parser@1.9.3/dist/fit-file-parser.min.js"></script>
+
+</head>
+
+<body>
+
+    <header class="header">
+
+        <h1>🏃 Coach 10K</h1>
+
+        <p>
+            Programme de préparation 10 km
+        </p>
+
+    </header>
+
+    <main>
+
+        <!-- TABLEAU DE BORD -->
+
+        <section class="card">
+
+            <h2>Tableau de bord</h2>
+
+            <p>
+                Semaine :
+                <span id="currentWeek">
+                    1 / 12
+                </span>
+            </p>
+
+            <p>
+                Progression :
+                <span id="completionPercent">
+                    0%
+                </span>
+            </p>
+
+            <p>
+                Séances réalisées :
+                <span id="completedSessions">
+                    0 / 36
+                </span>
+            </p>
+
+            <p>
+                Poids :
+                <span id="currentWeight">
+                    -
+                </span>
+            </p>
+
+        </section>
+
+        <!-- PROGRAMME -->
+
+        <section class="card">
+
+            <h2>
+                Programme d'entraînement
+            </h2>
+
+            <label for="weekSelector">
+
+                Sélectionner une semaine
+
+            </label>
+
+            <select id="weekSelector">
+
+            </select>
+
+            <div
+                id="trainingPlanContainer">
+
+            </div>
+
+        </section>
+
+        <!-- ENREGISTREMENT DU POIDS -->
+
+        <section class="card">
+
+            <h2>
+                Suivi du poids
+            </h2>
+
+            <input
+                type="number"
+                id="weightInput"
+                placeholder="Poids en kg">
+
+            <button id="saveWeightBtn">
+
+                Enregistrer le poids
+
+            </button>
+
+        </section>
+
+        <!-- JOURNAL -->
+
+        <section class="card">
+
+            <h2>
+                Journal d'entraînement
+            </h2>
+
+            <textarea
+                id="trainingNotes"
+                rows="4"
+                placeholder="Notes de séance...">
+            </textarea>
+
+            <button id="saveNoteBtn">
+
+                Ajouter une note
+
+            </button>
+
+            <div id="notesContainer">
+
+            </div>
+
+        </section>
+
+        <!-- PROCHAINE SEANCE -->
+
+        <section class="card">
+
+            <h2>
+                Prochaine séance
+            </h2>
+
+            <div id="nextWorkout">
+
+                Choisissez une semaine.
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- JAVASCRIPT -->
+
+    <script src="js/storage.js"></script>
+
+    <script src="js/training.js"></script>
+
+    <script src="js/dashboard.js"></script>
+
+    <script src="js/timer.js"></script>
+
+    <script src="js/calendar.js"></script>
+
+    <script src="js/stats.js"></script>
+
+    <script src="js/gps.js"></script>
+
+    <script src="js/exercices.js"></script>
+
+    <script src="js/gpx.js"></script>
+
+    <script src="js/fit.js"></script>
+
+    <script src="js/app.js"></script>
+
+
+</body>
+
+</html>
+<section class="card">
+
+    <h2>Chronomètre</h2>
+
+    <div id="stopwatchDisplay">
+
+        00:00:00
+
+    </div>
+
+    <button id="startStopwatchBtn">
+        Démarrer
+    </button>
+
+    <button id="pauseStopwatchBtn">
+        Pause
+    </button>
+
+    <button id="resetStopwatchBtn">
+        Réinitialiser
+    </button>
+
+</section>
+
+<section class="card">
+
+    <h2>Compte à rebours</h2>
+
+    <input
+        id="countdownInput"
+        type="number"
+        value="5"
+        min="1">
+
+    <div id="countdownDisplay">
+        05:00
+    </div>
+
+    <button id="startCountdownBtn">
+        Démarrer
+    </button>
+
+    <button id="resetCountdownBtn">
+        Réinitialiser
+    </button>
+
+</section>
+
+<section class="card">
+
+    <h2>Calendrier</h2>
+
+    <div>
+
+        <button id="prevMonthBtn">
+            ◀
+        </button>
+
+        <span id="calendarTitle">
+        </span>
+
+        <button id="nextMonthBtn">
+            ▶
+        </button>
+
+    </div>
+
+    <div
+        id="calendar"
+        class="calendar-grid">
+    </div>
+
+</section>
+
+<section class="card">
+
+    <h2>
+        📊 Statistiques
+    </h2>
+
+    <div id="distanceStats">
+    </div>
+
+</section>
+
+<section class="card">
+
+    <h2>
+        ⚖️ Historique du poids
+    </h2>
+
+    <div id="weightHistory">
+
+    </div>
+
+</section>
+
+<section class="card">
+
+    <h2>
+        🫁 VO₂max
+    </h2>
+
+    <input
+        id="vo2Time"
+        type="number"
+        placeholder="Temps 10 km (min)">
+
+    <button onclick="calculateVO2()">
+
+        Calculer
+
+    </button>
+
+    <div id="vo2Result">
+
+    </div>
+
+</section>
+
+<section class="card">
+
+    <h2>
+        🎯 Prédiction 10 km
+    </h2>
+
+    <input
+        id="fiveKmTime"
+        type="number"
+        placeholder="Temps 5 km (min)">
+
+    <button onclick="predict10K()">
+
+        Calculer
+
+    </button>
+
+    <div id="predictionResult">
+
+    </div>
+
+</section>
+
+<section class="card">
+
+    <h2>🏃 GPS Running</h2>
+
+    <p id="gpsStatus">
+        🔴 Non démarré
+    </p>
+
+    <p>
+        Distance :
+        <span id="gpsDistance">
+            0 km
+        </span>
+    </p>
+
+    <p>
+        Allure :
+        <span id="gpsPace">
+            -
+        </span>
+    </p>
+
+    <button id="startRunBtn">
+        Démarrer la sortie
+    </button>
+
+    <button id="stopRunBtn">
+        Arrêter
+    </button>
+
+</section>
+
+<section class="card">
+
+    <h2>
+        Historique des sorties
+    </h2>
+
+    <div id="runHistory">
+
+    </div>
+
+</section>
+
+<section class="card">
+
+    <h2>📚 Bibliothèque d'exercices</h2>
+
+    <div id="exerciseLibrary">
+
+    </div>
+
+</section>
+
+<section class="card">
+
+    <h2>
+        🗺️ Import GPX
+    </h2>
+
+    <p>
+        Importez un fichier GPX
+        provenant de Garmin,
+        Strava ou Komoot.
+    </p>
+
+    <input
+        type="file"
+        id="gpxFile"
+        accept=".gpx">
+
+    <div id="gpxResults">
+
+    </div>
+
+</section>
+
+<section class="card">
+
+    <h2>
+        ⌚ Import FIT Garmin
+    </h2>
+
+    <input
+        type="file"
+        id="fitFile"
+        accept=".fit">
+
+    <div id="fitResults">
+
+    </div>
+
+</section>
